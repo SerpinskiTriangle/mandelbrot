@@ -1,10 +1,12 @@
 CC = gcc
 TARGET = mandelbrot
-LDFLAGS = -lm
+LDFLAGS = -lm -lSDL2
 CFLAGS = -Wall -Wextra
+SDLFLAGS =  $(shell sdl2-config --cflags) $(shell sdl2-config --libs)
+
 
 $(TARGET): mandelbrot.c
-	$(CC) mandelbrot.c -o $(TARGET) $(LDFLAGS) $(CFLAGS)
+	$(CC) mandelbrot.c -o $(TARGET) $(LDFLAGS) $(CFLAGS) $(SDLFLAGS)
 
 clean:
 	rm -rf $(TARGET)
