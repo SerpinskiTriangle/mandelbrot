@@ -45,7 +45,7 @@ int color_point(double complex point, double complex exponent, double complex co
 }
 
 
-int main(){
+void start_sdl(){
   SDL_Event event;
   int running;
 
@@ -58,14 +58,23 @@ int main(){
 
   SDL_SetRenderDrawColor(renderer,0,0,0,255);
   SDL_RenderClear(renderer);
+}
+
+
+void stop_sdl(){
+  SDL_DestroyRenderer(renderer);
+  SDL_DestroyWindow(window);
+  SDL_Quit();
+}
+
+
+int main(){
+  start_sdl();
 
   SDL_RenderPresent(renderer);
   SDL_Delay(2000); //milliseconds
 
-  SDL_DestroyRenderer(renderer);
-  SDL_DestroyWindow(window);
-  SDL_Quit();
-
+  stop_sdl();
 
   return 0;
 }
