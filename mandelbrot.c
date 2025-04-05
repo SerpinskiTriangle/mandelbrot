@@ -46,24 +46,26 @@ int color_point(double complex point, double complex exponent, double complex co
 
 
 int main(){
-  SDL_Window* window;
-  SDL_Renderer* renderer;
   SDL_Event event;
   int running;
 
-  const int window_width;
-  const int window_height;
+  const int window_width = 800;
+  const int window_height = 800;
   
   SDL_Init(SDL_INIT_VIDEO);
-  SDL_CreateWindowAndRenderer(window_width,window_height,0,&window,&renderer);
+  SDL_Window* window = SDL_CreateWindow("SDL2 Window", 0, 0, window_height, window_width, SDL_WINDOW_SHOWN);
+  SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-  
-  double complex point = 2.0;
-  double complex exponent = 2.0;
-  double complex constant = -1.0;
+  SDL_SetRenderDrawColor(renderer,0,0,0,255);
+  SDL_RenderClear(renderer);
 
-  double complex result = iterate(point, exponent, constant, 5);
+  SDL_RenderPresent(renderer);
+  SDL_Delay(2000); //milliseconds
 
-  print_complex(result);
+  SDL_DestroyRenderer(renderer);
+  SDL_DestroyWindow(window);
+  SDL_Quit();
+
+
   return 0;
 }
