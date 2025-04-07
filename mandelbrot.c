@@ -45,23 +45,17 @@ int color_point(double complex point, double complex exponent, double complex co
 }
 
 
-void start_sdl(){
-  SDL_Event event;
-  int running;
-
-  const int window_width = 800;
-  const int window_height = 800;
-  
+void start_sdl(const int window_height, const int window_width, SDL_Window** window, SDL_Renderer** renderer){
   SDL_Init(SDL_INIT_VIDEO);
-  SDL_Window* window = SDL_CreateWindow("SDL2 Window", 0, 0, window_height, window_width, SDL_WINDOW_SHOWN);
-  SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+  *window = SDL_CreateWindow("SDL2 Window", 0, 0, window_height, window_width, SDL_WINDOW_SHOWN);
+  *renderer = SDL_CreateRenderer(*window, -1, SDL_RENDERER_ACCELERATED);
 
-  SDL_SetRenderDrawColor(renderer,0,0,0,255);
-  SDL_RenderClear(renderer);
+  SDL_SetRenderDrawColor(*renderer,0,0,0,255);
+  SDL_RenderClear(*renderer);
 }
 
 
-void stop_sdl(){
+void stop_sdl(SDL_Window* window, SDL_Renderer* renderer){
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
   SDL_Quit();
@@ -69,12 +63,18 @@ void stop_sdl(){
 
 
 int main(){
-  start_sdl();
+  const int window_height = 800;
+  const int window_width  = 800;
+
+  SDL_Window* window     = NULL;
+  SDL_Renderer* renderer = NULL;
+
+  start_sdl(window_height, window_width, &window, &renderer);
 
   SDL_RenderPresent(renderer);
   SDL_Delay(2000); //milliseconds
 
-  stop_sdl();
+  stop_sdl(window, renderer);
 
   return 0;
 }
