@@ -107,12 +107,14 @@ int main(){
 
   int running = 1;
 
+  int iterations = 15;
+
   start_sdl(window_height, window_width, &window, &renderer);
   SDL_RenderPresent(renderer);
     
 
   while (running){
-    color_window(&renderer, window_height, window_width, 0, 2, 15, window_x, window_y, zoom);
+    color_window(&renderer, window_height, window_width, 0, 2, iterations, window_x, window_y, zoom);
     SDL_RenderPresent(renderer);
 
     SDL_PollEvent(&event);
@@ -128,6 +130,8 @@ int main(){
     window_y += (keyboardstate[SDL_SCANCODE_UP] - keyboardstate[SDL_SCANCODE_DOWN])    * zoom * move_speed;
 
     zoom *= pow(1.01, keyboardstate[SDL_SCANCODE_SPACE] - keyboardstate[SDL_SCANCODE_LSHIFT]);
+
+    iterations += keyboardstate[SDL_SCANCODE_Z] - keyboardstate[SDL_SCANCODE_X];
     printf("%e, %e\r", window_x, window_y);
   }
   
